@@ -1,0 +1,136 @@
+# Regras globais para todos os robôs
+User-agent: *
+Disallow: /
+Noindex: /
+Nofollow: /
+Noarchive: /
+Nocache: /
+
+# Bloquear ferramentas de cópia específicas
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: ProWebWalker
+Disallow: /
+
+User-agent: CheeseBot
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Web-By-Mail
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebSauger
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: URLy Warning
+Disallow: /
+
+User-agent: Pixray
+Disallow: /
+
+User-agent: PageGrabber
+Disallow: /
+
+User-agent: SiteSucker
+Disallow: /
+
+# Bloquear bots de scraping conhecidos
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SEMrushBot
+Disallow: /
+
+User-agent: rogerbot
+Disallow: /
+
+User-agent: exabot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: PDFmyURL
+Disallow: /
+
+User-agent: Spinn3r
+Disallow: /
+
+User-agent: SearchmetricsBot
+Disallow: /
+
+# Bloquear crawlers de arquivo
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: Archive-It
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+# Regras específicas para APIs e endpoints sensíveis
+Disallow: /api/
+Disallow: /includes/
+Disallow: /admin/
+Disallow: /scripts/
+Disallow: /temp/
+Disallow: /download/
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Prevenir cache e arquivamento
+X-Robots-Tag: noarchive, nosnippet, noodp, noimageindex, nofollow
+
+# Crawl-delay para limitar a velocidade de rastreamento
+Crawl-delay: 1000
+
+# Sitemap (não fornecido para prevenir indexação)
+# Sitemap: none

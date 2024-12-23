@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de WhatsApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0 d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-whatsapp"></i> Validador de WhatsApp</span>
+                            <a href="https://wa.me/5519999259603?text=Olá! Já fiz minha doação para o Validador WhatsApp. Segue o comprovante do PIX..." 
+                               class="btn btn-light btn-sm" target="_blank">
+                               <i class="bi bi-send-check"></i> Enviar Comprovante
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="numberInput" class="form-label">Números de WhatsApp</label>
+                            <textarea class="form-control" id="numberInput" rows="5" placeholder="Digite os números aqui (um por linha) ou importe um arquivo Excel"></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-2 mb-4">
+                            <button class="btn btn-primary" id="importExcel">
+                                <i class="bi bi-file-earmark-excel"></i> Importar Excel
+                            </button>
+                            <button class="btn btn-success" id="validateNumbers">
+                                <i class="bi bi-check-circle"></i> Validar Números
+                            </button>
+                        </div>
+
+                        <div id="loadingSection" class="d-none">
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <p class="text-center" id="statusText">Validando números...</p>
+                        </div>
+
+                        <div id="resultsSection" class="d-none">
+                            <h5 class="border-bottom pb-2">Resultados da Validação</h5>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Foto</th>
+                                            <th>Número</th>
+                                            <th>Nome</th>
+                                            <th>Desde</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resultsTable"></tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-success" id="exportExcel">
+                                <i class="bi bi-download"></i> Exportar Válidos para Excel
+                            </button>
+                        </div>
+
+                        <div id="premiumMessage" class="alert alert-warning mt-3 d-none">
+                            <h5 class="alert-heading">
+                                <i class="bi bi-star-fill text-warning"></i> Limite de Validação Atingido
+                                <a href="https://wa.me/5519999259603?text=Olá! Já fiz minha doação para o Validador WhatsApp. Segue o comprovante do PIX..." 
+                                   class="btn btn-success btn-sm float-end" target="_blank">
+                                   <i class="bi bi-send-check"></i> Enviar Comprovante
+                                </a>
+                            </h5>
+                            <p>Você atingiu o limite de 10 validações na versão gratuita.</p>
+                            <hr>
+                            <p class="mb-0">
+                                Contribua com o projeto através de uma doação e receba acesso ilimitado! 
+                                <button class="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#donationModal">
+                                   <i class="bi bi-heart-fill"></i> Fazer Doação
+                                </button>
+                            </p>
+                            <p class="mt-2 small text-muted">
+                                Sua contribuição é fundamental para mantermos este serviço gratuito e em constante evolução!
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Doação -->
+    <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="donationModalLabel">
+                        <i class="bi bi-heart-fill"></i> Contribua com o Projeto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <h4>Escolha o valor da sua contribuição</h4>
+                        <p class="text-muted">Sua doação ajuda a manter o servidor online e desenvolver novas funcionalidades!</p>
+                    </div>
+
+                    <div class="row justify-content-center g-4">
+                        <!-- Opção R$10 -->
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title text-success">R$ 10</h3>
+                                    <p class="card-text">Acesso ilimitado por 1 mês</p>
+                                    <button class="btn btn-outline-success w-100" onclick="showQRCode('10', '00020126580014BR.GOV.BCB.PIX0136cdc48965-f3bf-405d-9017-7117c8acd065520400005303986540510.005802BR5925Albertino Gomes dos Reis 6009SAO PAULO62140510ND6xH0bF4V63046D6E')">
+                                        Selecionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opção R$20 -->
+                        <div class="col-md-4">
+                            <div class="card h-100 border-success">
+                                <div class="card-header bg-success text-white text-center">
+                                    <strong>Mais Popular</strong>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h3 class="card-title text-success">R$ 20</h3>
+                                    <p class="card-text">Acesso ilimitado por 3 meses</p>
+                                    <button class="btn btn-success w-100" onclick="showQRCode('20', '00020126580014BR.GOV.BCB.PIX0136cdc48965-f3bf-405d-9017-7117c8acd065520400005303986540520.005802BR5925Albertino Gomes dos Reis 6009SAO PAULO62140510KnJ3H7b0NM6304F184')">
+                                        Selecionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opção R$50 -->
+                        <div class="col-md-4">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h3 class="card-title text-success">R$ 50</h3>
+                                    <p class="card-text">Acesso ilimitado por 1 ano</p>
+                                    <button class="btn btn-outline-success w-100" onclick="showQRCode('50', '00020126580014BR.GOV.BCB.PIX0136cdc48965-f3bf-405d-9017-7117c8acd065520400005303986540550.005802BR5925Albertino Gomes dos Reis 6009SAO PAULO62140510HJqZPaywyr630457AE')">
+                                        Selecionar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área do QR Code -->
+                    <div id="qrCodeArea" class="mt-4 text-center d-none">
+                        <hr>
+                        <h5>Faça sua doação via PIX</h5>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <img id="qrCodeImage" src="" alt="QR Code PIX" class="img-fluid mb-3" style="max-width: 200px;">
+                                <div class="input-group mb-3">
+                                    <input type="text" id="pixCode" class="form-control" readonly>
+                                    <button class="btn btn-outline-success" type="button" onclick="copyPixCode()">
+                                        <i class="bi bi-clipboard"></i> Copiar
+                                    </button>
+                                </div>
+                                <div class="alert alert-info">
+                                    <small>
+                                        <i class="bi bi-info-circle"></i> Após realizar o pagamento, envie o comprovante pelo WhatsApp para receber seu código de ativação em até 5 minutos.
+                                    </small>
+                                </div>
+                                <a href="https://wa.me/5519999259603?text=Olá! Já fiz minha doação para o Validador WhatsApp. Segue o comprovante do PIX..." 
+                                   class="btn btn-success mt-2" target="_blank">
+                                   <i class="bi bi-send-check-fill"></i> Enviar Comprovante pelo WhatsApp
+                                </a>
+                                <div class="mt-2">
+                                    <small class="text-muted">
+                                        Ao enviar o comprovante, você receberá um código de ativação para acesso ilimitado.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".xlsx, .xls" class="d-none">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="security.min.js"></script>
+    <script src="script.min.js"></script>
+</body>
+</html>
